@@ -15,6 +15,9 @@ phases:
     commands:
       - composer update
       - npm install
+  build:
+    commands:
+      - ./vendor/bin/phpunit --testsuite=Unit
 artifacts:
   files:
     - "**/*"
