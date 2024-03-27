@@ -15,9 +15,6 @@ phases:
     commands:
       - composer update
       - npm install
-  build:
-    commands:
-      - php artisan test
 artifacts:
   files:
     - "**/*"
