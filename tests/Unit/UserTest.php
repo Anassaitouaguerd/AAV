@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
     public function test_user_can_be_created()
     {
         $userData = [
