@@ -17,7 +17,7 @@ phases:
       - npm install
   build:
     commands:
-      - ./vendor/bin/phpunit --testsuite=Unit
+      - php artisan test
 artifacts:
   files:
     - "**/*"
