@@ -26,10 +26,8 @@ class AuthController extends Controller
         $user = User::where('email', $credentials['email'])->first();
         if (Auth::attempt($credentials)) {
             $token = $this->access_token->token($user->name, $user->id, $user->email);
-            if ($user->remember_token === $token) {
-                $cookie = cookie('token', $token, 60);
-                return response()->json(['message' => 'Login successful'], 200)->cookie($cookie);
-            }
+            $cookie = cookie('token', $token, 60);
+            return response()->json(['message' => 'Login successful'], 200)->cookie($cookie);
         }
     }
     public function Register(AddUserRequest $request)
@@ -40,9 +38,6 @@ class AuthController extends Controller
             'password' => $request->password
         ]);
         Auth::login($user);
-        $token = $this->access_token->token($user->name, $user->id, $user->email);
-        $user->remember_token = $token;
-        $user->save();
         return response()->json(['message' => 'Register successful'], 200);
     }
     public function logout()
