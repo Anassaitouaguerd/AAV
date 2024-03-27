@@ -39,12 +39,11 @@ class UserController extends Controller
      */
     public function store(AddUserRequest $request)
     {
-        $users = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
         ]);
-        $token = $this->access_token->token($users->name, $users->id, $users->email);
         return response()->json(['message' => 'created successful'], 201);
     }
 
