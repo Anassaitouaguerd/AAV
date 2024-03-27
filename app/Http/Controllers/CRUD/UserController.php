@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CRUD;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\JWT\Token;
 use App\Http\Requests\AddUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,9 +67,15 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        //
+        $user = User::where("id", $id)->first();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->update();
+        $dataUser = $user;
+        return response()->json($dataUser, 202);
     }
 
     /**
@@ -76,6 +83,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::where("id", $id)->first();
+        $user->delete();
+        return response()->json(['message' => 'User Deleted successful'], 202);
     }
 }
