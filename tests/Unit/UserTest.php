@@ -3,17 +3,20 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    use RefreshDatabase;
-
+    protected function refreshTable($table)
+    {
+        DB::table($table)->truncate();
+    }
     # test Add new user 
 
     public function test_user_can_be_created()
     {
+        $this->refreshTable('users');
         $userData = [
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -27,7 +30,8 @@ class UserTest extends TestCase
     # test update user
 
     public function test_user_can_be_updated()
-    {
+    {        
+        $this->refreshTable('users');
         $user = User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -50,6 +54,7 @@ class UserTest extends TestCase
 
     public function test_user_can_be_deleted()
     {
+        $this->refreshTable('users');
         $user = User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
